@@ -1,7 +1,6 @@
 package nl.cape.academy.solidprinciples.entities;
 
 import java.util.UUID;
-import nl.cape.academy.solidprinciples.entities.UniversityPackage;
 
 public class Student {
     private final int STANDARD_ALLOWANCE = 10;
@@ -15,12 +14,9 @@ public class Student {
         this.emailAddress = emailAddress;
         this.universityId = universityId;
 
-        if (universityPackage == UniversityPackage.STANDARD)
-        {
+        if (universityPackage == UniversityPackage.STANDARD) {
             this.monthlyEbookAllowance = STANDARD_ALLOWANCE;
-        }
-        else if (universityPackage == UniversityPackage.PREMIUM)
-        {
+        } else if (universityPackage == UniversityPackage.PREMIUM) {
             this.monthlyEbookAllowance = STANDARD_ALLOWANCE * 2;
         }
     }
