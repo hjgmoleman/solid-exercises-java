@@ -1,10 +1,9 @@
 package nl.cape.academy.solidprinciples.repositories.impl;
 
 import nl.cape.academy.solidprinciples.entities.Student;
-import nl.cape.academy.solidprinciples.repositories.StudentReadRepository;
-import nl.cape.academy.solidprinciples.repositories.StudentWriteRepository;
+import nl.cape.academy.solidprinciples.repositories.StudentRepository;
 
-public class StudentRepositoryImpl implements StudentReadRepository, StudentWriteRepository {
+public class StudentRepositoryImpl implements StudentRepository {
     @Override
     public void add(Student student) {
         throw new UnsupportedOperationException();

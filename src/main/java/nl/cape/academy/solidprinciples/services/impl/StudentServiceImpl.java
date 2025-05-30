@@ -6,9 +6,8 @@ import java.util.UUID;
 import nl.cape.academy.solidprinciples.entities.LimitedStudent;
 import nl.cape.academy.solidprinciples.entities.Student;
 import nl.cape.academy.solidprinciples.entities.University;
+import nl.cape.academy.solidprinciples.repositories.StudentRepository;
 import nl.cape.academy.solidprinciples.repositories.UniversityReadRepository;
-import nl.cape.academy.solidprinciples.repositories.impl.StudentRepositoryImpl;
-import nl.cape.academy.solidprinciples.repositories.impl.UniversityRepositoryImpl;
 import nl.cape.academy.solidprinciples.services.Logger;
 import nl.cape.academy.solidprinciples.services.StudentAllowanceService;
 import nl.cape.academy.solidprinciples.services.StudentFactory;
@@ -16,26 +15,38 @@ import nl.cape.academy.solidprinciples.services.StudentPersistService;
 import nl.cape.academy.solidprinciples.services.StudentQueryService;
 
 public class StudentServiceImpl implements StudentQueryService, StudentPersistService, StudentAllowanceService {
+    private Logger logger;
+    private StudentRepository studentRepository;
+    private UniversityReadRepository universityRepository;
+    private StudentFactory studentFactory;
+
+    public StudentServiceImpl(
+        StudentRepository studentRepository,
+        StudentFactory studentFactory,
+        UniversityReadRepository universityRepository,
+        Logger logger
+        ) {
+        this.studentRepository = studentRepository;
+        this.studentFactory = studentFactory;
+        this.universityRepository = universityRepository;
+        this.logger = logger;
+    }
+
     public boolean add(String emailAddress, UUID universityId) {       
-        Logger logger = new Logger();
         logger.logMessage("Log: Start add student with email '%s'", emailAddress);
  
         if ("".equals(emailAddress) || emailAddress == null) {
             return false;
         }
- 
-        StudentRepositoryImpl studentRepository = new StudentRepositoryImpl();
-        if (studentRepository.exists(emailAddress)) {
+        
+        if (this.studentRepository.exists(emailAddress)) {
             return false;
         }
- 
-        UniversityReadRepository universityRepository = new UniversityRepositoryImpl();
-        University university = universityRepository.getById(universityId);
- 
-        StudentFactory studentFactory = new StudentFactory();
-        Student student = studentFactory.createStudent(emailAddress, university);
+        
+        University university = this.universityRepository.getById(universityId);
+        Student student = this.studentFactory.createStudent(emailAddress, university);
          
-        studentRepository.add(student);
+        this.studentRepository.add(student);
  
         logger.logMessage("Log: End add student with email '%s'", emailAddress);
  
