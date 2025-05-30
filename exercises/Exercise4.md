@@ -1,9 +1,11 @@
 # Introduction
-This exercise will be focussed on the Liskov Substitution Principle:
-- Subtypes must be substitutable for their base types.
+This exercise will be focussed on the Interface Segregation Principle:
+
+- Clients should not be forced to depend on methods they do not use.
+
+# Requirements
+- Make sure the source code it's up to date with the answer to exercise 3
 
 # Exercise 4
-A new requirement introduces an "Unlimited package". A student with this package does not have a montly allowance limit.
-
-- Examine the design of the Student and its derived classes and try to identify how introducing this new "Unlimited" student type would break LSP.
-- Find a way to fix this.
+- Examine StudentService and try to identify how its functionality might be devided for different types of clients.
+- Find a way to allow clients to use this devided functionality.
