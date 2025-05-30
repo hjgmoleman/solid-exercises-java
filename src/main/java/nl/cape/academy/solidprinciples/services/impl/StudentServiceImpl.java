@@ -1,4 +1,4 @@
-package nl.cape.academy.solidprinciples.services;
+package nl.cape.academy.solidprinciples.services.impl;
 
 import java.util.List;
 import java.util.UUID;
@@ -6,10 +6,16 @@ import java.util.UUID;
 import nl.cape.academy.solidprinciples.entities.LimitedStudent;
 import nl.cape.academy.solidprinciples.entities.Student;
 import nl.cape.academy.solidprinciples.entities.University;
-import nl.cape.academy.solidprinciples.repositories.StudentRepository;
-import nl.cape.academy.solidprinciples.repositories.UniversityRepository;
+import nl.cape.academy.solidprinciples.repositories.UniversityReadRepository;
+import nl.cape.academy.solidprinciples.repositories.impl.StudentRepositoryImpl;
+import nl.cape.academy.solidprinciples.repositories.impl.UniversityRepositoryImpl;
+import nl.cape.academy.solidprinciples.services.Logger;
+import nl.cape.academy.solidprinciples.services.StudentAllowanceService;
+import nl.cape.academy.solidprinciples.services.StudentFactory;
+import nl.cape.academy.solidprinciples.services.StudentPersistService;
+import nl.cape.academy.solidprinciples.services.StudentQueryService;
 
-public class StudentService {
+public class StudentServiceImpl implements StudentQueryService, StudentPersistService, StudentAllowanceService {
     public boolean add(String emailAddress, UUID universityId) {       
         Logger logger = new Logger();
         logger.logMessage("Log: Start add student with email '%s'", emailAddress);
@@ -18,12 +24,12 @@ public class StudentService {
             return false;
         }
  
-        StudentRepository studentRepository = new StudentRepository();
+        StudentRepositoryImpl studentRepository = new StudentRepositoryImpl();
         if (studentRepository.exists(emailAddress)) {
             return false;
         }
  
-        UniversityRepository universityRepository = new UniversityRepository();
+        UniversityReadRepository universityRepository = new UniversityRepositoryImpl();
         University university = universityRepository.getById(universityId);
  
         StudentFactory studentFactory = new StudentFactory();
@@ -36,6 +42,7 @@ public class StudentService {
         return true;
     }
     
+    @Override
     public void addBonusAllowances() {
         for (Student student : getStudents()) {
             if (student instanceof LimitedStudent) {
@@ -45,14 +52,17 @@ public class StudentService {
         }
     }
 
+    @Override
     public List<Student> getStudentsByUniversity() {
         throw new UnsupportedOperationException();
     }
- 
+
+    @Override
     public List<Student> getStudentsByCurrentlyBorrowedEbooks() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public List<Student> getStudents() {
         throw new UnsupportedOperationException();
     }
