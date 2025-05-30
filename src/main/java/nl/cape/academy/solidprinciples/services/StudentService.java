@@ -9,7 +9,7 @@ import nl.cape.academy.solidprinciples.repositories.StudentRepository;
 import nl.cape.academy.solidprinciples.repositories.UniversityRepository;
 
 public class StudentService {
-    public boolean add(String emailAddress, UUID universityId) {
+    public boolean add(String emailAddress, UUID universityId) {       
         Logger logger = new Logger();
         logger.logMessage("Log: Start add student with email '%s'", emailAddress);
  
@@ -34,12 +34,22 @@ public class StudentService {
  
         return true;
     }
-     
+    
+    public void addBonusAllowances() {
+        for (Student student : getStudents()) {
+            student.addBonusAllowance();
+        }
+    }
+
     public List<Student> getStudentsByUniversity() {
         throw new UnsupportedOperationException();
     }
  
     public List<Student> getStudentsByCurrentlyBorrowedEbooks() {
+        throw new UnsupportedOperationException();
+    }
+
+    public List<Student> getStudents() {
         throw new UnsupportedOperationException();
     }
 }
