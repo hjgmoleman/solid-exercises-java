@@ -5,13 +5,13 @@ import java.util.UUID;
 
 import nl.cape.academy.solidprinciples.entities.Student;
 import nl.cape.academy.solidprinciples.entities.University;
-import nl.cape.academy.solidprinciples.entities.UniversityPackage;
 import nl.cape.academy.solidprinciples.repositories.StudentRepository;
 import nl.cape.academy.solidprinciples.repositories.UniversityRepository;
 
 public class StudentService {
     public boolean add(String emailAddress, UUID universityId) {
-        System.console().writer().println(String.format("Log: Start add student with email '%s'", emailAddress));
+        Logger logger = new Logger();
+        logger.logMessage("Log: Start add student with email '%s'", emailAddress);
  
         if ("".equals(emailAddress) || emailAddress == null) {
             return false;
@@ -25,17 +25,12 @@ public class StudentService {
         UniversityRepository universityRepository = new UniversityRepository();
         University university = universityRepository.getById(universityId);
  
-        Student student = new Student(emailAddress, universityId);
-         
-        if (university.getUniversityPackage() == UniversityPackage.STANDARD) {
-            student.setMonthlyEbookAllowance(10);
-        } else if (university.getUniversityPackage() == UniversityPackage.PREMIUM) {
-            student.setMonthlyEbookAllowance(10 * 2);
-        }
+        StudentFactory studentFactory = new StudentFactory();
+        Student student = studentFactory.createStudent(emailAddress, university);
          
         studentRepository.add(student);
  
-        System.console().writer().println(String.format("Log: End add student with email '%s'", emailAddress));
+        logger.logMessage("Log: End add student with email '%s'", emailAddress);
  
         return true;
     }
