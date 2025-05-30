@@ -8,9 +8,4 @@ public class UnlimitedStudent extends Student {
         super(emailAddress, universityId);
         setMonthlyEbookAllowance(0);
     }
-
-    @Override
-    public void addBonusAllowance() {
-        throw new UnsupportedOperationException("A bonus on the monthly allowance is not applicable to an unlimited student.");
-    }
 }

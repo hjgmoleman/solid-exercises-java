@@ -3,6 +3,7 @@ package nl.cape.academy.solidprinciples.services;
 import java.util.List;
 import java.util.UUID;
 
+import nl.cape.academy.solidprinciples.entities.LimitedStudent;
 import nl.cape.academy.solidprinciples.entities.Student;
 import nl.cape.academy.solidprinciples.entities.University;
 import nl.cape.academy.solidprinciples.repositories.StudentRepository;
@@ -37,7 +38,10 @@ public class StudentService {
     
     public void addBonusAllowances() {
         for (Student student : getStudents()) {
-            student.addBonusAllowance();
+            if (student instanceof LimitedStudent) {
+                LimitedStudent limitedStudent = (LimitedStudent)student;
+                limitedStudent.addBonusAllowance();
+            }
         }
     }
 

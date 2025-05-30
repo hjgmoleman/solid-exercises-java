@@ -32,8 +32,6 @@ public abstract class Student {
         return this.currentlyBorrowedEbooks;
     }
 
-    public abstract void addBonusAllowance();
-
     protected void setMonthlyEbookAllowance(int allowance) {
         this.monthlyEbookAllowance = allowance;
     }
