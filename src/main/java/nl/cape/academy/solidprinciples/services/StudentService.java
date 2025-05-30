@@ -10,18 +10,15 @@ import nl.cape.academy.solidprinciples.repositories.StudentRepository;
 import nl.cape.academy.solidprinciples.repositories.UniversityRepository;
 
 public class StudentService {
-    public boolean add(String emailAddress, UUID universityId)
-    {       
+    public boolean add(String emailAddress, UUID universityId) {
         System.console().writer().println(String.format("Log: Start add student with email '%s'", emailAddress));
  
-        if ("".equals(emailAddress) || emailAddress == null)
-        {
+        if ("".equals(emailAddress) || emailAddress == null) {
             return false;
         }
  
         StudentRepository studentRepository = new StudentRepository();
-        if (studentRepository.exists(emailAddress))
-        {
+        if (studentRepository.exists(emailAddress)) {
             return false;
         }
  
@@ -30,14 +27,11 @@ public class StudentService {
  
         Student student = new Student(emailAddress, universityId);
          
-        if (university.getUniversityPackage() == UniversityPackage.STANDARD)
-        {
+        if (university.getUniversityPackage() == UniversityPackage.STANDARD) {
             student.setMonthlyEbookAllowance(10);
-        }
-        else if (university.getUniversityPackage() == UniversityPackage.PREMIUM)
-        {
+        } else if (university.getUniversityPackage() == UniversityPackage.PREMIUM) {
             student.setMonthlyEbookAllowance(10 * 2);
-        }                           
+        }
          
         studentRepository.add(student);
  
@@ -46,13 +40,11 @@ public class StudentService {
         return true;
     }
      
-    public List<Student> getStudentsByUniversity()
-    {
+    public List<Student> getStudentsByUniversity() {
         throw new UnsupportedOperationException();
     }
  
-    public List<Student> getStudentsByCurrentlyBorrowedEbooks()
-    {
-        throw new UnsupportedOperationException();       
+    public List<Student> getStudentsByCurrentlyBorrowedEbooks() {
+        throw new UnsupportedOperationException();
     }
 }
